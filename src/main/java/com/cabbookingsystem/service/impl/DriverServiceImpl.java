@@ -39,12 +39,12 @@ public class DriverServiceImpl implements DriverService {
         if (!passwordEncoder.matches(request.getPassword(), driver.getPasswordHash())) {
             throw new RuntimeException("Invalid credentials");
         }
-        return jwtUtil.generateToken(driver.getPhone(), "DRIVER");
+        return jwtUtil.generateToken(driver.getPhone(), driver.getRole());
     }
 
     @Override
-    public Driver getProfile(String jwtToken) {
-        String phone = jwtUtil.extractUsername(jwtToken);
+    public Driver getProfile(String token) {
+        String phone = jwtUtil.getUsernameFromToken(token);
         return driverRepository.findByPhone(phone)
                 .orElseThrow(() -> new RuntimeException("Driver not found"));
     }
