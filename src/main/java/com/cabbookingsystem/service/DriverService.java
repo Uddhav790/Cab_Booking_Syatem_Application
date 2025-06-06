@@ -1,8 +1,8 @@
 package com.cabbookingsystem.service;
 
-import com.MyModule.dto.DriverLoginRequest;
-import com.MyModule.dto.DriverRegisterRequest;
-import com.MyModule.entity.Driver;
+import com.cabbookingsystem.dto.DriverLoginRequest;
+import com.cabbookingsystem.dto.DriverRegisterRequest;
+import com.cabbookingsystem.entity.Driver;
 
 public interface DriverService {
     String register(DriverRegisterRequest request);
