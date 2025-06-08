@@ -1,7 +1,8 @@
 package com.cabbookingsystem.util;
 
-
+import com.cabbookingsystem.entity.Driver;
 import com.cabbookingsystem.entity.User;
+import com.cabbookingsystem.repository.DriverRepository;
 import com.cabbookingsystem.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -15,6 +16,7 @@ import java.util.Collections;
 public class CustomUserDetailsService implements UserDetailsService {
 
     private final UserRepository userRepository;
+    private final DriverRepository driverRepository;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -28,6 +30,16 @@ public class CustomUserDetailsService implements UserDetailsService {
             );
         }
 
-        throw new UsernameNotFoundException("User not found with username: " + username);
+        // Try Driver
+        Driver driver = driverRepository.findByPhone(username).orElse(null);
+        if (driver != null) {
+            return new org.springframework.security.core.userdetails.User(
+                    driver.getPhone(),
+                    driver.getPasswordHash(),
+                    Collections.singletonList(new SimpleGrantedAuthority("ROLE_" + driver.getRole().name()))
+            );
+        }
+
+        throw new UsernameNotFoundException("User or Driver not found with username: " + username);
     }
 }

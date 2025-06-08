@@ -1,14 +1,16 @@
 package com.cabbookingsystem.service.impl;
 
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
+import com.cabbookingsystem.enums.Role;
 import com.cabbookingsystem.dto.DriverLoginRequest;
 import com.cabbookingsystem.dto.DriverRegisterRequest;
 import com.cabbookingsystem.entity.Driver;
 import com.cabbookingsystem.repository.DriverRepository;
 import com.cabbookingsystem.service.DriverService;
 import com.cabbookingsystem.util.JwtUtil;
+
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
@@ -27,6 +29,7 @@ public class DriverServiceImpl implements DriverService {
                 .vehicleDetails(request.getVehicleDetails())
                 .status("available")
                 .passwordHash(passwordEncoder.encode(request.getPassword()))
+                .role(Role.DRIVER)
                 .build();
         driverRepository.save(driver);
         return "Driver registered successfully";
