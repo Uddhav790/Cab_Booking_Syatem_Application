@@ -43,7 +43,9 @@ public class SecurityConfig {
                 // Permit public API endpoints
                 .requestMatchers(
                     "/api/users/register",
-                    "/api/users/login"
+                    "/api/users/login",
+                    "/api/drivers/login", 
+                    "/api/drivers/register"
                 ).permitAll()
 
                 // Permit Swagger UI and API Docs
