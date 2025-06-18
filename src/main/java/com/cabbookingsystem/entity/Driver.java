@@ -21,7 +21,7 @@ public class Driver {
     private String licenseNumber;
     private String vehicleDetails;
     private String status; 
-    private String passwordHash; // Add this field
+    private String passwordHash;
 
     @Enumerated(EnumType.STRING)
     private Role role;

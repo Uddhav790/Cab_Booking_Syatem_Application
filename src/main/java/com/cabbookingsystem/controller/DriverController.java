@@ -29,7 +29,6 @@ public class DriverController {
     @GetMapping("/profile")
     @PreAuthorize("hasRole('DRIVER')")
     public ResponseEntity<Driver> getProfile(@RequestHeader("Authorization") String token) {
-        // Extract the token from the "Authorization" header
         String jwtToken = token.startsWith("Bearer ") ? token.substring(7) : token;
         return ResponseEntity.ok(driverService.getProfile(jwtToken));
     }
